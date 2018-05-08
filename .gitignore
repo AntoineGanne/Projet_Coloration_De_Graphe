@@ -1,3 +1,8 @@
 
 *.xml
 *.iml
+.idea/description.html
+out/production/colorationDeGrpahe/Modele/Sommet.class
+out/production/colorationDeGrpahe/Modele/Graphe.class
+out/production/colorationDeGrpahe/Main.class
+out/production/colorationDeGrpahe/FileReader.class
