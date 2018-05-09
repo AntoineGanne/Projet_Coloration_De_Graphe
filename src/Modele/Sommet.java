@@ -1,10 +1,13 @@
 package Modele;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
-public class Sommet {
+public class Sommet implements Comparable<Sommet> {
     ArrayList<Sommet> successeurs;
+
+
 
     int idCouleur;
     static final int DEFAULT_COLOR=-1;
@@ -35,9 +38,16 @@ public class Sommet {
     public ArrayList<Sommet> getSuccesseurs() {
         return successeurs;
     }
+    public int getNombreDeSuccesseurs(){return successeurs.size();}
 
     public int getIdCouleur() {
         return idCouleur;
+    }
+    public void setIdCouleur(int idCouleur) {
+        this.idCouleur = idCouleur;
+    }
+    public void resetCouleur() {
+        this.idCouleur = DEFAULT_COLOR;
     }
 
     public int getId() {
@@ -46,5 +56,20 @@ public class Sommet {
 
     public String getNom() {
         return nom;
+    }
+
+    /**
+     * operateur de comparaison entre deux sommet. La comparaison se fait sur le nombre de successeurs
+     * @param s
+     * @return
+     */
+    @Override
+    public int compareTo(Sommet s) {
+        int thisNbSuccesseurs=this.getNombreDeSuccesseurs();
+        int autresSommetNbSuccesseur=s.getNombreDeSuccesseurs();
+
+        if(thisNbSuccesseurs<autresSommetNbSuccesseur)return -1;
+        else if(thisNbSuccesseurs==autresSommetNbSuccesseur) return 0;
+        else return 1;
     }
 }

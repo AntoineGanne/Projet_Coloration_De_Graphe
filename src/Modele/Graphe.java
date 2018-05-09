@@ -1,6 +1,7 @@
 package Modele;
 
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Graphe {
@@ -10,6 +11,8 @@ public class Graphe {
 
     String nomGraphe;
     static final String DEFAULT_GRAPHE_NAME="Graphe Anonyme";
+
+    static final int MAX_ID_COULEUR=2048;
 
     public Graphe(){
         sommets=new ArrayList<>(0);
@@ -52,6 +55,53 @@ public class Graphe {
     }
 
 
+    public void resetCouleurSommets(){
+        for(Sommet s:
+                sommets){
+            s.resetCouleur();
+        }
+    }
+
+    /////algorithmes de coloration
+    public void greedyColoring() throws Exception {
+        int c;
+        resetCouleurSommets();
+        ArrayList<Sommet> L=new ArrayList<>(sommets);
+        L.sort(Sommet::compareTo);; //trie les sommets selon leur degré
+        while (!L.isEmpty()){
+            Sommet x=L.get(0);
+            c=0;
+            ArrayList<Integer> idCouleursSuccesseurs=new ArrayList<Integer>();
+            for(Sommet succ :x.getSuccesseurs()){
+                idCouleursSuccesseurs.add(succ.getIdCouleur());
+            }
+            while(idCouleursSuccesseurs.contains(c)){
+                c++;
+                if(c>MAX_ID_COULEUR) throw new Exception("Nombre de couleurs trop important");
+            }
+            x.setIdCouleur(c);
+            L.remove(0);
+        }
+    }
+
+    /**
+     * teste si la coloration du graphe est correcte (2 sommets adjacents n'ont pas la même couleur)
+     * @return vrai si la coloration est correcte;
+     */
+    public boolean ColorationEstCorrecte(){
+        for(Sommet x :sommets){
+            int idCouleurX=x.getIdCouleur();
+            for(Sommet succ:x.getSuccesseurs()){
+                int idCouleurSucc=succ.getIdCouleur();
+                if(idCouleurSucc==idCouleurX)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+
+    /////
 
     public void setEstOriente(boolean estOriente) {
         this.estOriente = estOriente;

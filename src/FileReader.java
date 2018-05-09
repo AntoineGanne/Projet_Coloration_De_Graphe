@@ -63,7 +63,7 @@ public class FileReader {
                                 if(nbArcs==-1){
                                     throw new IOException("errreur, lecture des aretes. nbAretes non defini");
                                 }
-                                lectureAretes(grapheGenerated,sc,nbSommets);
+                                lectureAretes(grapheGenerated,sc,nbArcs);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
