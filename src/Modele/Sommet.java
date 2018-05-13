@@ -35,6 +35,22 @@ public class Sommet implements Comparable<Sommet> {
         }
     }
 
+    /**
+     * renvoit vrai si l'un des successeur du sommet est de la couleur donnée en paramètre.
+     * Problème possible dans le cas d'un graphe orienté?
+     * @param couleur
+     * @return renvoit vrai si l'un des successeur du sommet est de la couleur donnée en paramètre.
+     */
+    boolean estAdjacentACouleur(int couleur){
+        for (Sommet x:
+             this.getSuccesseurs()) {
+            if(x.getIdCouleur()==couleur){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Sommet> getSuccesseurs() {
         return successeurs;
     }
@@ -49,6 +65,7 @@ public class Sommet implements Comparable<Sommet> {
     public void resetCouleur() {
         this.idCouleur = DEFAULT_COLOR;
     }
+    public boolean haveDefaultColor(){return this.idCouleur==DEFAULT_COLOR;}
 
     public int getId() {
         return id;

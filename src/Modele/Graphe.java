@@ -66,21 +66,47 @@ public class Graphe {
     public void greedyColoring() throws Exception {
         int c;
         resetCouleurSommets();
-        ArrayList<Sommet> L=new ArrayList<>(sommets);
-        L.sort(Sommet::compareTo);; //trie les sommets selon leur degré
+        ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
+        L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
         while (!L.isEmpty()){
             Sommet x=L.get(0);
             c=0;
+            //on recupère les couleurs utilisées dans les successeurs
             ArrayList<Integer> idCouleursSuccesseurs=new ArrayList<Integer>();
             for(Sommet succ :x.getSuccesseurs()){
                 idCouleursSuccesseurs.add(succ.getIdCouleur());
             }
+            //on prend la premiere couleur qui ne se trouve dans aucun successeur
             while(idCouleursSuccesseurs.contains(c)){
                 c++;
                 if(c>MAX_ID_COULEUR) throw new Exception("Nombre de couleurs trop important");
             }
             x.setIdCouleur(c);
             L.remove(0);
+        }
+    }
+
+    public void WelshPowell() {
+        resetCouleurSommets();
+        ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
+        L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
+        int c;
+        int k=0;
+        while(!L.isEmpty()){
+            Sommet x=L.get(0);
+            x.setIdCouleur(k);
+            L.remove(0);//on retire x de L
+            int i=0;
+            while (i<L.size()) {
+                Sommet y=L.get(i);
+                if(!y.estAdjacentACouleur(k)){
+                    y.setIdCouleur(k);
+                    L.remove(i);
+                }else{
+                    i++;
+                }
+            }
+            k++;
         }
     }
 
@@ -91,6 +117,7 @@ public class Graphe {
     public boolean ColorationEstCorrecte(){
         for(Sommet x :sommets){
             int idCouleurX=x.getIdCouleur();
+            if(x.haveDefaultColor()) return false;
             for(Sommet succ:x.getSuccesseurs()){
                 int idCouleurSucc=succ.getIdCouleur();
                 if(idCouleurSucc==idCouleurX)
@@ -98,6 +125,20 @@ public class Graphe {
             }
         }
         return true;
+    }
+
+    public int nombreDeCouleursUtilisees(){
+        ArrayList<Integer> couleurs=new ArrayList<>();
+        for (Sommet x:
+             sommets) {
+            if(!x.haveDefaultColor()){
+                int idCouleurX=x.getIdCouleur();
+                if(!couleurs.contains(idCouleurX)){
+                    couleurs.add(idCouleurX);
+                }
+            }
+        }
+        return couleurs.size();
     }
 
 
