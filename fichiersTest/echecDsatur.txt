@@ -1,0 +1,31 @@
+Nom: queen5_5
+Oriente(non/oui): non
+NbSommets: 8
+NbValSommet: 0
+NbArcs: 12
+NbValArc: 0
+--- Liste des sommets
+0 id0
+1 id1
+2 id2
+3 id3
+4 id4
+5 id5
+6 id6
+7 id7
+--- Liste des aretes
+0 2
+0 3
+0 1
+0 4
+1 2
+1 3
+1 5
+4 6
+4 7
+6 7
+5 6
+5 7
+
+
+

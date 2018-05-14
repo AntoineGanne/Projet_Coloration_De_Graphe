@@ -4,10 +4,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Graphe g=FileReader.lectureGrapheDepuisFichier("fichiersTest/queen5_5.txt");
+        Graphe g=FileReader.lectureGrapheDepuisFichier("fichiersTest/echecDsatur.txt");
         try {
             //g.greedyColoring();
-            g.WelshPowell();
+            g.greedyColoring();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,8 +1,6 @@
 package Modele;
 
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Scanner;
 
 public class Graphe {
     ArrayList<Sommet> sommets;
@@ -90,7 +88,6 @@ public class Graphe {
         resetCouleurSommets();
         ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
         L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
-        int c;
         int k=0;
         while(!L.isEmpty()){
             Sommet x=L.get(0);
@@ -108,6 +105,53 @@ public class Graphe {
             }
             k++;
         }
+    }
+
+    public void DSATUR() {
+        resetCouleurSommets();
+        ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
+        //Ordonner les sommets par ordre décroissant de degrés
+        L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
+        int k=0;
+        //On colore un sommet de degré maximum avec la couleur 0.
+        L.get(0).setIdCouleur(k);
+
+        while(!L.isEmpty()){
+            Sommet x=getSommetAvecPlusHauteDsaturValue(L);
+            /////Colorer ce sommet avec la plus petite couleur possible
+            //on recupère les couleurs utilisées dans les successeurs
+            ArrayList<Integer> idCouleursSuccesseurs=new ArrayList<Integer>();
+            for(Sommet succ :x.getSuccesseurs()){
+                idCouleursSuccesseurs.add(succ.getIdCouleur());
+            }
+            //on prend la premiere couleur qui ne se trouve dans aucun successeur
+            k=0;
+            while(idCouleursSuccesseurs.contains(k)){
+                k++;
+            }
+            x.setIdCouleur(k);
+            L.remove(x);//on retire x de L
+        }
+    }
+
+    /**
+     * Choisir un sommet avec DSAT maximum. En cas d'égalité, choisir un sommet de degré maximal
+     * (ssi L est triée selon les degrés decroissant)
+     * @param L
+     * @return s un sommet avec DSAT maximum
+     */
+    static Sommet getSommetAvecPlusHauteDsaturValue(ArrayList<Sommet> L){
+        Sommet resultat=L.get(0);
+        int bestDsaturValue=resultat.DsaturValue();
+        Sommet s;
+        for(int i=1;i<L.size();i++){
+            s=L.get(i);
+            if(s.DsaturValue()>bestDsaturValue){
+                resultat=s;
+                bestDsaturValue=resultat.DsaturValue();
+            }
+        }
+        return resultat;
     }
 
     /**

@@ -51,6 +51,21 @@ public class Sommet implements Comparable<Sommet> {
         return false;
     }
 
+    /**
+     *
+     * @return nombre de couleurs différentes dans les sommets adjacents
+     */
+    int DsaturValue(){
+        ArrayList<Integer> couleursAdjacentes=new ArrayList<>();
+        for(Sommet s :successeurs){
+            int couleurS=s.getIdCouleur();
+            if(!s.haveDefaultColor()&&!couleursAdjacentes.contains(couleurS)){
+                couleursAdjacentes.add(couleurS);
+            }
+        }
+        return couleursAdjacentes.size();
+    }
+
     public ArrayList<Sommet> getSuccesseurs() {
         return successeurs;
     }
@@ -85,8 +100,8 @@ public class Sommet implements Comparable<Sommet> {
         int thisNbSuccesseurs=this.getNombreDeSuccesseurs();
         int autresSommetNbSuccesseur=s.getNombreDeSuccesseurs();
 
-        if(thisNbSuccesseurs<autresSommetNbSuccesseur)return -1;
+        if(thisNbSuccesseurs<autresSommetNbSuccesseur)return 1;
         else if(thisNbSuccesseurs==autresSommetNbSuccesseur) return 0;
-        else return 1;
+        else return -1;
     }
 }
