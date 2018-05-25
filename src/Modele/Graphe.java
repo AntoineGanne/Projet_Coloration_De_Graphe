@@ -1,5 +1,7 @@
 package Modele;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Graphe {
@@ -184,10 +186,46 @@ public class Graphe {
         }
         return couleurs.size();
     }
+    /////////
 
+    public void printGraphe(boolean writeOnConsole){
+        StringBuilder contenuFichier = new StringBuilder();
 
-    /////
+        contenuFichier.append("Nom: "+getNom()+"\n");
+        contenuFichier.append("Oriente(non/oui): ");
+        contenuFichier.append(estOriente?"oui":"non");
+        contenuFichier.append("NbSommets: "+sommets.size()+"\n");
+        //NbValSommet
+        contenuFichier.append("NbSommets: "+getNombreDarc()+"\n");
+        //NbValArc
 
+        for(int i=0;i<sommets.size();i++){
+            Sommet s=sommets.get(i);
+            contenuFichier.append(i+" "+s.getNom()+"\n");
+        }
+
+        for(Sommet s:sommets){
+            for(Sommet succ : s.getSuccesseurs()){
+                contenuFichier.append(s.getId()+" "+succ.getId()+"\n");
+            }
+        }
+
+        if(writeOnConsole) System.out.println(contenuFichier.toString());
+
+        try(PrintWriter out=new PrintWriter("fichiersSauvegarde/"+getNom())){
+            out.println(contenuFichier.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getNombreDarc(){
+        int compteur=0;
+        for(Sommet s: sommets){
+            compteur+=s.getNombreDeSuccesseurs();
+        }
+        return compteur;
+    }
     public void setEstOriente(boolean estOriente) {
         this.estOriente = estOriente;
     }
