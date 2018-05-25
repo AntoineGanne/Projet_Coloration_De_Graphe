@@ -17,9 +17,13 @@ public class Main {
             else
                 g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
 
-            //g.greedyColoring();
+            double start = System.nanoTime();
+            g.greedyColoring();
             //g.WelshPowell();
-            g.DSATUR();
+            //g.DSATUR();
+            double end = System.nanoTime();
+            System.out.println("Temps d'exécution = "+(end-start)/1000000+ " ms");
+
 
             if(g.ColorationEstCorrecte()){
                 System.out.println("La coloration est correcte!");
