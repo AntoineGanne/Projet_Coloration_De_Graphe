@@ -5,16 +5,25 @@ import java.util.Comparator;
 
 
 public class Sommet implements Comparable<Sommet> {
-    ArrayList<Sommet> successeurs;
+    private ArrayList<Sommet> successeurs;
 
 
 
-    int idCouleur;
+    private int idCouleur;
     static final int DEFAULT_COLOR=-1;
 
-    int id; //correspond a l'emplacement du sommet dans l'arraylist du graphe
+    private int id; //correspond a l'emplacement du sommet dans l'arraylist du graphe
 
-    String nom;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    private String nom;
+
     static final String DEFAULT_NAME="Anonyme";
 
     Sommet(String nomInput,int idInput){
