@@ -6,6 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
         Graphe g;
+        int choix;
+        double start, end;
 
         try {
             Scanner sc = new Scanner(System.in);
@@ -17,13 +19,33 @@ public class Main {
             else
                 g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
 
-            double start = System.nanoTime();
-            g.greedyColoring();
-            //g.WelshPowell();
-            //g.DSATUR();
-            double end = System.nanoTime();
-            System.out.println("Temps d'exécution = "+(end-start)/1000000+ " ms");
+            System.out.println("Veuillez choisir une méthode");
+            System.out.println("1 - Greedy");
+            System.out.println("2 - WelshPowell");
+            System.out.println("3 - DSatur");
+            System.out.println("Autre - Quitter");
+            choix = sc.nextInt();
 
+            switch(choix) {
+                case 1:
+                    start = System.nanoTime();
+                    g.greedyColoring();
+                    end = System.nanoTime();
+                    System.out.println("Temps d'exécution = "+(end-start)/1000000+ " ms");
+                    break;
+                case 2:
+                    start = System.nanoTime();
+                    g.WelshPowell();
+                    end = System.nanoTime();
+                    System.out.println("Temps d'exécution = "+(end-start)/1000000+ " ms");
+                    break;
+                case 3:
+                    start = System.nanoTime();
+                    g.DSATUR();
+                    end = System.nanoTime();
+                    System.out.println("Temps d'exécution = "+(end-start)/1000000+ " ms");
+                    break;
+            }
 
             if(g.ColorationEstCorrecte()){
                 System.out.println("La coloration est correcte!");
