@@ -32,6 +32,8 @@ public class Main {
                 System.out.println("La coloration est incorrecte");
             }
 
+            g.printGraphe(true);
+
         } catch (Exception e){
             e.printStackTrace();
         }
