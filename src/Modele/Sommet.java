@@ -44,6 +44,10 @@ public class Sommet implements Comparable<Sommet> {
         }
     }
 
+    boolean estVoisinA(Sommet s){
+        return successeurs.contains(s);
+    }
+
     /**
      * renvoit vrai si l'un des successeur du sommet est de la couleur donnée en paramètre.
      * Problème possible dans le cas d'un graphe orienté?

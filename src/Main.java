@@ -10,7 +10,10 @@ public class Main {
         double start, end;
 
         try {
+
             Scanner sc = new Scanner(System.in);
+
+            /*
             System.out.println("Veuillez entrer le nom du fichier à tester");
             String nomFichier = sc.next();
 
@@ -18,6 +21,8 @@ public class Main {
                 g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier + ".txt");
             else
                 g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
+*/
+            g=grapheGenerator.generationGraphe(500,1000,false);
 
             System.out.println("Veuillez choisir une méthode");
             System.out.println("1 - Greedy");
@@ -26,6 +31,8 @@ public class Main {
             System.out.println("Autre - Quitter");
             choix = sc.nextInt();
 
+            g.coloration(choix,true);
+            /*
             switch(choix) {
                 case 1:
                     start = System.nanoTime();
@@ -46,6 +53,7 @@ public class Main {
                     System.out.println("Temps d'exécution = "+(end-start)/1000000+ " ms");
                     break;
             }
+            */
 
             if(g.ColorationEstCorrecte()){
                 System.out.println("La coloration est correcte!");
@@ -54,7 +62,7 @@ public class Main {
                 System.out.println("La coloration est incorrecte");
             }
 
-            g.printGraphe(true);
+            //g.printGraphe(true);
 
         } catch (Exception e){
             e.printStackTrace();

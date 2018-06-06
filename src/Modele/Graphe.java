@@ -45,13 +45,21 @@ public class Graphe {
         }
     }
 
+    /**
+     * crée une arete
+     * @param indexSommetInitial
+     * @param indexSommetFinal
+     * @throws Exception
+     */
     public void ajouterArc(int indexSommetInitial,int indexSommetFinal) throws Exception {
         if(indexSommetInitial<0 || indexSommetInitial>sommets.size()
                 || indexSommetFinal<0 || indexSommetFinal>sommets.size()){
             throw new Exception("Index d'ajout des arcs impossible");
 
         }
+
         ajouterArc(sommets.get(indexSommetInitial),sommets.get(indexSommetFinal));
+
     }
 
 
@@ -62,7 +70,50 @@ public class Graphe {
         }
     }
 
+    public boolean areteExisteEntreSommets(int indexSommetInitial,int indexSommetFinal){
+        Sommet sInitial=sommets.get(indexSommetInitial);
+        Sommet sFinal=sommets.get(indexSommetFinal);
+        if(this.estOriente){
+            return sInitial.estVoisinA(sFinal);
+        }else{
+            return sInitial.estVoisinA(sFinal) || sFinal.estVoisinA(sInitial);
+        }
+    }
+
     /////algorithmes de coloration
+
+    /**
+     * entrée principale pour lacoloration de graphe
+     * @param modeColoration  int correspond a un algorithme de coloration
+     * @param writeOnConsole si vrai, écrit des informations en console
+     * @return
+     */
+    public double coloration(int modeColoration, boolean writeOnConsole) throws Exception {
+        resetCouleurSommets();
+        double start=0, end=0;
+        String nomMethode="erreur nom methode";
+        switch (modeColoration){
+            case 1:
+                nomMethode="Greedy";
+                start = System.nanoTime();
+                greedyColoring();
+                end = System.nanoTime();
+            case 2:
+                nomMethode="WelshPowell";
+                start = System.nanoTime();
+                WelshPowell();
+                end = System.nanoTime();
+            case 3:
+                nomMethode="Dsatur";
+                start = System.nanoTime();
+                DSATUR();
+                end = System.nanoTime();
+        }
+        double tempsExec=(end-start)/1000000;
+        if(writeOnConsole)System.out.println("temps d'execution avec "+nomMethode+" : "+tempsExec+" ms");
+        return tempsExec;
+    }
+
     public void greedyColoring() throws Exception {
         int c;
         resetCouleurSommets();
