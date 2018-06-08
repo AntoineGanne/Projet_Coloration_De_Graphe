@@ -12,7 +12,8 @@ public class Graphe {
     String nomGraphe;
     static final String DEFAULT_GRAPHE_NAME="Graphe Anonyme";
 
-    static final int MIN_ID_COULEUR=0;
+
+    static final int MIN_ID_COULEUR=1;  //!! doit ètre superieur a DEFAULT_COLOR defini dans Sommet
     static final int MAX_ID_COULEUR=2048;
 
     public Graphe(){
@@ -99,25 +100,77 @@ public class Graphe {
                 start = System.nanoTime();
                 greedyColoring();
                 end = System.nanoTime();
+                if(!ColorationEstCorrecte()){
+                    throw new Exception ("Coloration incorrecte!");
+                }
             case 2:
                 nomMethode="WelshPowell";
                 start = System.nanoTime();
                 WelshPowell();
                 end = System.nanoTime();
+                if(!ColorationEstCorrecte()){
+                    throw new Exception ("Coloration incorrecte!");
+                }
             case 3:
                 nomMethode="Dsatur";
                 start = System.nanoTime();
                 DSATUR();
                 end = System.nanoTime();
+                if(!ColorationEstCorrecte()){
+                    throw new Exception ("Coloration incorrecte!");
+                }
         }
+
+
+        System.out.println("Nombre de couleurs utilisées: "+nombreDeCouleursUtilisees());
         double tempsExec=(end-start)/1000000;
         if(writeOnConsole)System.out.println("temps d'execution avec "+nomMethode+" : "+tempsExec+" ms");
         return tempsExec;
     }
 
+    public void testerToutesLesColorations(){
+        double start=0, end=0;
+
+        try {
+            resetCouleurSommets();
+            start = System.nanoTime();
+            greedyColoring();
+            end = System.nanoTime();
+            double tempsExec=(end-start)/1000000;
+            System.out.println("Algorithme greedy: \n"+"     nombre de couleurs: "+nombreDeCouleursUtilisees()+" \n"
+                    +"      temps d'execution: "+tempsExec+" ms");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            resetCouleurSommets();
+            start = System.nanoTime();
+            WelshPowell();
+            end = System.nanoTime();
+            double tempsExec=(end-start)/1000000;
+            System.out.println("Algorithme WelshPowell: \n"+"     nombre de couleurs: "+nombreDeCouleursUtilisees()+" \n"
+                    +"      temps d'execution: "+tempsExec+" ms");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            resetCouleurSommets();
+            start = System.nanoTime();
+            DSATUR();
+            end = System.nanoTime();
+            double tempsExec=(end-start)/1000000;
+            System.out.println("Algorithme DSATUR: \n"+"     nombre de couleurs: "+nombreDeCouleursUtilisees()+" \n"
+                    +"      temps d'execution: "+tempsExec+" ms");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void greedyColoring() throws Exception {
         int c;
-        resetCouleurSommets();
         ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
         L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
         while (!L.isEmpty()){
@@ -139,7 +192,6 @@ public class Graphe {
     }
 
     public void WelshPowell() {
-        resetCouleurSommets();
         ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
         L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
         int k=MIN_ID_COULEUR;
@@ -162,13 +214,15 @@ public class Graphe {
     }
 
     public void DSATUR() {
-        resetCouleurSommets();
         ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
         //Ordonner les sommets par ordre décroissant de degrés
-        L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
+        L.sort(Sommet::compareTo); //trie les sommets selon leur degré . O(n*log(n))
         int k;
         //On colore un sommet de degré maximum avec la couleur 0.
-        L.get(0).setIdCouleur(MIN_ID_COULEUR);
+        Sommet sInitial=L.get(0); //complexité en O(n)
+        sInitial.setIdCouleur(MIN_ID_COULEUR);
+        sInitial.miseAJourValeurDSATURDesSommetsAdjacents();
+        L.remove(0);
 
         while(!L.isEmpty()){
             Sommet x=getSommetAvecPlusHauteDsaturValue(L);
@@ -184,6 +238,7 @@ public class Graphe {
                 k++;
             }
             x.setIdCouleur(k);
+            x.miseAJourValeurDSATURDesSommetsAdjacents();
             L.remove(x);//on retire x de L
         }
     }
@@ -207,6 +262,8 @@ public class Graphe {
         }
         return resultat;
     }
+
+
 
     /**
      * teste si la coloration du graphe est correcte (2 sommets adjacents n'ont pas la même couleur)
@@ -239,6 +296,9 @@ public class Graphe {
         return couleurs.size();
     }
     /////////
+
+
+
 
     public void printGraphe(boolean writeOnConsole){
         StringBuilder contenuFichier = new StringBuilder();

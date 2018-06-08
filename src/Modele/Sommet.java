@@ -8,9 +8,10 @@ public class Sommet implements Comparable<Sommet> {
     private ArrayList<Sommet> successeurs;
 
 
-
     private int idCouleur;
     static final int DEFAULT_COLOR=-1;
+
+    private int valeurDSATUR;
 
     private int id; //correspond a l'emplacement du sommet dans l'arraylist du graphe
 
@@ -31,6 +32,7 @@ public class Sommet implements Comparable<Sommet> {
         this.idCouleur=DEFAULT_COLOR;
         this.nom=nomInput;
         this.id=idInput;
+        this.valeurDSATUR=0;
     }
 
     Sommet(int idInput){
@@ -44,6 +46,11 @@ public class Sommet implements Comparable<Sommet> {
         }
     }
 
+    /**
+     * ne marche correctement que dans le cas des graphes non-orientés
+     * @param s
+     * @return vrai
+     */
     boolean estVoisinA(Sommet s){
         return successeurs.contains(s);
     }
@@ -69,14 +76,17 @@ public class Sommet implements Comparable<Sommet> {
      * @return nombre de couleurs différentes dans les sommets adjacents
      */
     int DsaturValue(){
-        ArrayList<Integer> couleursAdjacentes=new ArrayList<>();
-        for(Sommet s :successeurs){
-            int couleurS=s.getIdCouleur();
-            if(!s.haveDefaultColor()&&!couleursAdjacentes.contains(couleurS)){
-                couleursAdjacentes.add(couleurS);
-            }
+        return valeurDSATUR;
+    }
+
+    void incrementeDSATURvalue(){
+        valeurDSATUR++;
+    }
+
+    void miseAJourValeurDSATURDesSommetsAdjacents(){
+        for(Sommet s: getSuccesseurs()){
+            s.incrementeDSATURvalue();
         }
-        return couleursAdjacentes.size();
     }
 
     public ArrayList<Sommet> getSuccesseurs() {
@@ -92,6 +102,7 @@ public class Sommet implements Comparable<Sommet> {
     }
     public void resetCouleur() {
         this.idCouleur = DEFAULT_COLOR;
+        this.valeurDSATUR=0;
     }
     public boolean haveDefaultColor(){return this.idCouleur==DEFAULT_COLOR;}
 
