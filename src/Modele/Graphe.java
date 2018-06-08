@@ -12,6 +12,7 @@ public class Graphe {
     String nomGraphe;
     static final String DEFAULT_GRAPHE_NAME="Graphe Anonyme";
 
+    static final int MIN_ID_COULEUR=0;
     static final int MAX_ID_COULEUR=2048;
 
     public Graphe(){
@@ -121,7 +122,7 @@ public class Graphe {
         L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
         while (!L.isEmpty()){
             Sommet x=L.get(0);
-            c=0;
+            c=MIN_ID_COULEUR;
             //on recupère les couleurs utilisées dans les successeurs
             ArrayList<Integer> idCouleursSuccesseurs=new ArrayList<Integer>();
             for(Sommet succ :x.getSuccesseurs()){
@@ -141,7 +142,7 @@ public class Graphe {
         resetCouleurSommets();
         ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
         L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
-        int k=0;
+        int k=MIN_ID_COULEUR;
         while(!L.isEmpty()){
             Sommet x=L.get(0);
             x.setIdCouleur(k);
@@ -165,9 +166,9 @@ public class Graphe {
         ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
         //Ordonner les sommets par ordre décroissant de degrés
         L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
-        int k=0;
+        int k;
         //On colore un sommet de degré maximum avec la couleur 0.
-        L.get(0).setIdCouleur(k);
+        L.get(0).setIdCouleur(MIN_ID_COULEUR);
 
         while(!L.isEmpty()){
             Sommet x=getSommetAvecPlusHauteDsaturValue(L);
@@ -178,7 +179,7 @@ public class Graphe {
                 idCouleursSuccesseurs.add(succ.getIdCouleur());
             }
             //on prend la premiere couleur qui ne se trouve dans aucun successeur
-            k=0;
+            k=MIN_ID_COULEUR;
             while(idCouleursSuccesseurs.contains(k)){
                 k++;
             }
