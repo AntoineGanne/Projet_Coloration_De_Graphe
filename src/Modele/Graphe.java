@@ -228,7 +228,7 @@ public class Graphe {
             Sommet x=getSommetAvecPlusHauteDsaturValue(L);
             /////Colorer ce sommet avec la plus petite couleur possible
             //on recupère les couleurs utilisées dans les successeurs
-            ArrayList<Integer> idCouleursSuccesseurs=new ArrayList<Integer>();
+            ArrayList<Integer> idCouleursSuccesseurs=new ArrayList<>();
             for(Sommet succ :x.getSuccesseurs()){
                 idCouleursSuccesseurs.add(succ.getIdCouleur());
             }

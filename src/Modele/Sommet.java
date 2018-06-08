@@ -12,6 +12,7 @@ public class Sommet implements Comparable<Sommet> {
     static final int DEFAULT_COLOR=-1;
 
     private int valeurDSATUR;
+    private ArrayList<Integer> couleursAdjacentes; //utilisé par l'algorithme DSATUR
 
     private int id; //correspond a l'emplacement du sommet dans l'arraylist du graphe
 
@@ -33,6 +34,7 @@ public class Sommet implements Comparable<Sommet> {
         this.nom=nomInput;
         this.id=idInput;
         this.valeurDSATUR=0;
+        this.couleursAdjacentes=new ArrayList<>();
     }
 
     Sommet(int idInput){
@@ -76,16 +78,19 @@ public class Sommet implements Comparable<Sommet> {
      * @return nombre de couleurs différentes dans les sommets adjacents
      */
     int DsaturValue(){
-        return valeurDSATUR;
+        return couleursAdjacentes.size();
     }
 
-    void incrementeDSATURvalue(){
-        valeurDSATUR++;
+
+    void updateCouleursAdjacentes(int idNouvelleCouleur){
+        if(!couleursAdjacentes.contains(idNouvelleCouleur)){
+            couleursAdjacentes.add(idNouvelleCouleur);
+        }
     }
 
     void miseAJourValeurDSATURDesSommetsAdjacents(){
         for(Sommet s: getSuccesseurs()){
-            s.incrementeDSATURvalue();
+            s.updateCouleursAdjacentes(this.idCouleur);
         }
     }
 
