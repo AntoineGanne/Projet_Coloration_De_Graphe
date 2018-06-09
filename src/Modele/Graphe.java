@@ -62,7 +62,31 @@ public class Graphe {
         }
 
         ajouterArc(sommets.get(indexSommetInitial),sommets.get(indexSommetFinal));
+    }
 
+
+    public void ajouterArcAleatoire(){
+        int nbSommets=sommets.size();
+        boolean succesCreationArete=false;
+        do{  // on selectionne aléatoirement 2 sommets qui ne sont pas voisin et on les relie
+            int indexSommetInitial= (int) Math.floor(Math.random()*nbSommets);
+            int indexSommetFinal;
+            do{  // on ne veut pas d'aretes d'un sommet vers lui-même
+                indexSommetFinal=(int) Math.floor(Math.random()*nbSommets);
+            }while(indexSommetFinal==indexSommetInitial);
+            if(!areteExisteEntreSommets(indexSommetInitial,indexSommetFinal)){
+                try {
+                   ajouterArc(indexSommetInitial,indexSommetFinal);
+                    if(!estOriente){ //si il n'est pas orienté, on ajoute l'arete en sens inverse
+                        ajouterArc(indexSommetFinal,indexSommetInitial);
+                    }
+
+                    succesCreationArete=true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }while (!succesCreationArete);
     }
 
 
