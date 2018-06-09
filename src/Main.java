@@ -14,15 +14,15 @@ public class Main {
             Scanner sc = new Scanner(System.in);
 
 
-            System.out.println("Veuillez entrer le nom du fichier à tester");
-            String nomFichier = sc.next();
+//            System.out.println("Veuillez entrer le nom du fichier à tester");
+//            String nomFichier = sc.next();
+//
+//            if (!nomFichier.contains(".txt"))
+//                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier + ".txt");
+//            else
+//                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
 
-            if (!nomFichier.contains(".txt"))
-                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier + ".txt");
-            else
-                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
-
-//            g=grapheGenerator.generationGraphe(1000,1000,false);
+            g=grapheGenerator.generationGraphe(10000,100000,false);
 
             g.testerToutesLesColorations();
 //

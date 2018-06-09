@@ -16,6 +16,7 @@ public class Graphe {
     static final int MIN_ID_COULEUR=1;  //!! doit ètre superieur a DEFAULT_COLOR defini dans Sommet
     static final int MAX_ID_COULEUR=2048;
 
+
     public Graphe(){
         sommets=new ArrayList<>(0);
         estOriente=DEFAULT_ETAT_ORIENTATION;
@@ -122,7 +123,7 @@ public class Graphe {
         }
 
 
-        System.out.println("Nombre de couleurs utilisées: "+nombreDeCouleursUtilisees());
+        if(writeOnConsole)System.out.println("Nombre de couleurs utilisées: "+nombreDeCouleursUtilisees());
         double tempsExec=(end-start)/1000000;
         if(writeOnConsole)System.out.println("temps d'execution avec "+nomMethode+" : "+tempsExec+" ms");
         return tempsExec;
@@ -300,6 +301,7 @@ public class Graphe {
 
 
 
+
     public void printGraphe(boolean writeOnConsole){
         StringBuilder contenuFichier = new StringBuilder();
 
@@ -324,7 +326,7 @@ public class Graphe {
 
         if(writeOnConsole) System.out.println(contenuFichier.toString());
 
-        try(PrintWriter out=new PrintWriter("fichiersSauvegarde/"+getNom())){
+        try(PrintWriter out=new PrintWriter("fichiersSauvegarde/"+getNom()+".txt")){
             out.println(contenuFichier.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
