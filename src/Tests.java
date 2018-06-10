@@ -12,7 +12,7 @@ public class Tests{
         //rappel perso: si graphe avec n sommets alors nb max d'aretes= n(n-1)/2
         //generationTableau(1000,10000,400000,400000,100,dossierOutput);
         //testComplexiteEtNbCouleursSurNbAretesVariables(1000);
-        testComplexiteEtNbCouleursSurNbAretesVariables(50);
+        testComplexiteEtNbCouleursSurNbAretesVariables(501);
 
     }
 
@@ -116,13 +116,22 @@ public class Tests{
                 g.ajouterArcAleatoire();
                 nbAretesGraphe++;
             }
+
+            // on imprime le graphe
+            String nomGraphe="Sommets"+nbSommets+"_Aretes"+nbAretesGraphe;
+            g.setNom(nomGraphe);
+            g.printGraphe(false);
+
             System.out.println(nbAretesGraphe);
 
             try {
+                g.coloration(1,false);
                 double tempsExecGreedy = g.coloration(1, false);
                 int nbCouleursGreedy=g.nombreDeCouleursUtilisees();
+                g=FileReader.lectureGrapheDepuisFichier("fichiersSauvegarde/"+nomGraphe+".txt");
                 double tempsExecWP = g.coloration(2, false);
                 int nbCouleursWP=g.nombreDeCouleursUtilisees();
+                g=FileReader.lectureGrapheDepuisFichier("fichiersSauvegarde/"+nomGraphe+".txt");
                 double tempsExecDSATUR = g.coloration(3, false);
                 int nbCouleursDSATUR=g.nombreDeCouleursUtilisees();
 
@@ -147,7 +156,7 @@ public class Tests{
 
 
 
-        try(PrintWriter out=new PrintWriter(dossierOutput+"coplexitéArete_"+nbSommets+".txt")){
+        try(PrintWriter out=new PrintWriter(dossierOutput+"complexitéArete_"+nbSommets+".txt")){
             out.println(fileStringTempsExec.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();

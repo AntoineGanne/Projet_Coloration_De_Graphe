@@ -70,6 +70,7 @@ public class FileReader {
                         }
                         break;
                      default:
+                         System.out.println(next);
                          throw new IOException("Probleme lecture fichier");
                 }
 

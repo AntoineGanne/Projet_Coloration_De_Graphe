@@ -19,7 +19,7 @@ public class grapheGenerator {
 
         //ajout des sommets
         for(int i=0;i<nbSommets;i++){
-            grapheGenerated.ajouterSommet("noeud " + i);
+            grapheGenerated.ajouterSommet("noeud" + i);
         }
         //ajout des aretes
         for(int i=0;i<nbAretes;i++){

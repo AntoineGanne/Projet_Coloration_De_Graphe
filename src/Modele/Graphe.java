@@ -331,17 +331,19 @@ public class Graphe {
 
         contenuFichier.append("Nom: "+getNom()+"\n");
         contenuFichier.append("Oriente(non/oui): ");
-        contenuFichier.append(estOriente?"oui":"non");
+        contenuFichier.append(estOriente?"oui":"non"+"\n");
         contenuFichier.append("NbSommets: "+sommets.size()+"\n");
         //NbValSommet
-        contenuFichier.append("NbSommets: "+getNombreDarc()+"\n");
+        contenuFichier.append("NbArcs: "+getNombreDarc()+"\n");
         //NbValArc
 
+        contenuFichier.append("--- Liste des sommets\n");
         for(int i=0;i<sommets.size();i++){
             Sommet s=sommets.get(i);
             contenuFichier.append(i+" "+s.getNom()+"\n");
         }
 
+        contenuFichier.append("--- Liste des aretes\n");
         for(Sommet s:sommets){
             for(Sommet succ : s.getSuccesseurs()){
                 contenuFichier.append(s.getId()+" "+succ.getId()+"\n");
