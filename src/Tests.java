@@ -2,8 +2,6 @@ import Modele.Graphe;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.lang.annotation.Target;
-import java.security.cert.CRL;
 
 public class Tests{
     private static String CRLF="\r\n";
@@ -13,7 +11,9 @@ public class Tests{
     public static void main(String[] args){
         //rappel perso: si graphe avec n sommets alors nb max d'aretes= n(n-1)/2
         //generationTableau(1000,10000,400000,400000,100,dossierOutput);
-        testComplexiteSurNbAretesVariables(1000);
+        //testComplexiteEtNbCouleursSurNbAretesVariables(1000);
+        testComplexiteEtNbCouleursSurNbAretesVariables(50);
+
     }
 
     /**
@@ -95,46 +95,66 @@ public class Tests{
      * resultats dans le fichier valeursExcel/complexitéArete.txt
      * @param nbSommets
      */
-    public static void testComplexiteSurNbAretesVariables(int nbSommets){
+    public static void testComplexiteEtNbCouleursSurNbAretesVariables(int nbSommets){
         Graphe g=grapheGenerator.generationGraphe(nbSommets,0,false);
         int nbAretesMax=(nbSommets-1)*nbSommets/2;
         int inc=nbAretesMax/100;
         int nbAretesGraphe=0;
 
-        StringBuilder fileString = new StringBuilder();
-        fileString.append("nombre de sommets: ").append(nbSommets).append(CRLF);
-        fileString.append("nombre d'aretes").append(TAB).append("greedy").append(TAB).append("WP").append(TAB).append("DSATUR");
-        fileString.append(CRLF);
+        StringBuilder fileStringTempsExec = new StringBuilder();
+        fileStringTempsExec.append("nombre de sommets: ").append(nbSommets).append(CRLF);
+        fileStringTempsExec.append("nombre d'aretes").append(TAB).append("greedy").append(TAB).append("WP").append(TAB).append("DSATUR");
+        fileStringTempsExec.append(CRLF);
+
+        StringBuilder fileStringNbCouleurs = new StringBuilder();
+        fileStringNbCouleurs.append("nombre de sommets: ").append(nbSommets).append(CRLF);
+        fileStringNbCouleurs.append("nombre d'aretes").append(TAB).append("greedy").append(TAB).append("WP").append(TAB).append("DSATUR");
+        fileStringNbCouleurs.append(CRLF);
 
         for(int perCentOfAretes=0;perCentOfAretes<=100;perCentOfAretes+=10){
-            System.out.println(nbAretesGraphe);
             while(nbAretesGraphe<nbAretesMax*perCentOfAretes/100){
                 g.ajouterArcAleatoire();
                 nbAretesGraphe++;
             }
+            System.out.println(nbAretesGraphe);
 
             try {
                 double tempsExecGreedy = g.coloration(1, false);
+                int nbCouleursGreedy=g.nombreDeCouleursUtilisees();
                 double tempsExecWP = g.coloration(2, false);
+                int nbCouleursWP=g.nombreDeCouleursUtilisees();
                 double tempsExecDSATUR = g.coloration(3, false);
+                int nbCouleursDSATUR=g.nombreDeCouleursUtilisees();
 
-                fileString.append(perCentOfAretes).append(TAB);
-                fileString.append((int)tempsExecGreedy).append(TAB);
-                fileString.append((int)tempsExecWP).append(TAB);
-                fileString.append((int)tempsExecDSATUR).append(TAB);
+                fileStringTempsExec.append(perCentOfAretes).append(TAB);
+                fileStringTempsExec.append((int)tempsExecGreedy).append(TAB);
+                fileStringTempsExec.append((int)tempsExecWP).append(TAB);
+                fileStringTempsExec.append((int)tempsExecDSATUR).append(TAB);
+
+                fileStringNbCouleurs.append(perCentOfAretes).append(TAB);
+                fileStringNbCouleurs.append((int)nbCouleursGreedy).append(TAB);
+                fileStringNbCouleurs.append((int)nbCouleursWP).append(TAB);
+                fileStringNbCouleurs.append((int)nbCouleursDSATUR).append(TAB);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            fileString.append(CRLF);
+            fileStringTempsExec.append(CRLF);
+            fileStringNbCouleurs.append(CRLF);
 
         }
 
 
 
-        try(PrintWriter out=new PrintWriter(dossierOutput+"coplexitéArete.txt")){
-            out.println(fileString.toString());
+        try(PrintWriter out=new PrintWriter(dossierOutput+"coplexitéArete_"+nbSommets+".txt")){
+            out.println(fileStringTempsExec.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try(PrintWriter out=new PrintWriter(dossierOutput+"ComparaisonNbCouleurs_"+nbSommets+".txt")){
+            out.println(fileStringNbCouleurs.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

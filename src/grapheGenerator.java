@@ -12,6 +12,11 @@ public class grapheGenerator {
     public static Graphe generationGraphe(int nbSommets,int nbAretes, boolean estOriente){
         Graphe grapheGenerated=new Graphe(estOriente);
 
+        if(estOriente && nbAretes>nbSommets*(nbSommets-1)/2){
+            System.out.println("tentative de création de graphe contenznt trop d'aetes!");
+            return grapheGenerated;
+        }
+
         //ajout des sommets
         for(int i=0;i<nbSommets;i++){
             grapheGenerated.ajouterSommet("noeud " + i);

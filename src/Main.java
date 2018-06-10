@@ -22,7 +22,7 @@ public class Main {
 //            else
 //                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
 
-            g=grapheGenerator.generationGraphe(10000,100000,false);
+            g=grapheGenerator.generationGraphe(100,4000,false);
 
             g.testerToutesLesColorations();
 //

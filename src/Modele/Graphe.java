@@ -14,7 +14,7 @@ public class Graphe {
 
 
     static final int MIN_ID_COULEUR=1;  //!! doit ètre superieur a DEFAULT_COLOR defini dans Sommet
-    static final int MAX_ID_COULEUR=2048;
+    static final int MAX_ID_COULEUR=4000;
 
 
     public Graphe(){
@@ -217,7 +217,7 @@ public class Graphe {
     }
 
     public void WelshPowell() {
-        ArrayList<Sommet> L=new ArrayList<>(sommets); //liste des sommets du graphe
+        ArrayList<Sommet> L=new ArrayList<Sommet>(sommets); //liste des sommets du graphe
         L.sort(Sommet::compareTo); //trie les sommets selon leur degré (complexité??)
         int k=MIN_ID_COULEUR;
         while(!L.isEmpty()){
