@@ -126,13 +126,14 @@ public class Tests{
 
             try {
                 g.coloration(1,false);
-                double tempsExecGreedy = g.coloration(1, false);
+                double tempsExecDSATUR = g.coloration(3, false);
+
                 int nbCouleursGreedy=g.nombreDeCouleursUtilisees();
                 g=FileReader.lectureGrapheDepuisFichier("fichiersSauvegarde/"+nomGraphe+".txt");
                 double tempsExecWP = g.coloration(2, false);
                 int nbCouleursWP=g.nombreDeCouleursUtilisees();
                 g=FileReader.lectureGrapheDepuisFichier("fichiersSauvegarde/"+nomGraphe+".txt");
-                double tempsExecDSATUR = g.coloration(3, false);
+                double tempsExecGreedy = g.coloration(1, false);
                 int nbCouleursDSATUR=g.nombreDeCouleursUtilisees();
 
                 fileStringTempsExec.append(perCentOfAretes).append(TAB);

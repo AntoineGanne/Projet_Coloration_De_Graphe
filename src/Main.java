@@ -14,26 +14,26 @@ public class Main {
             Scanner sc = new Scanner(System.in);
 
 
-//            System.out.println("Veuillez entrer le nom du fichier à tester");
-//            String nomFichier = sc.next();
-//
-//            if (!nomFichier.contains(".txt"))
-//                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier + ".txt");
-//            else
-//                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
+            System.out.println("Veuillez entrer le nom du fichier à tester");
+            String nomFichier = sc.next();
 
-            g=grapheGenerator.generationGraphe(100,4000,false);
+            if (!nomFichier.contains(".txt"))
+                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier + ".txt");
+            else
+                g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
 
-            g.testerToutesLesColorations();
-//
-//            System.out.println("Veuillez choisir une méthode");
-//            System.out.println("1 - Greedy");
-//            System.out.println("2 - WelshPowell");
-//            System.out.println("3 - DSatur");
-//            System.out.println("Autre - Quitter");
-//            choix = sc.nextInt();
-//
-//            g.coloration(choix,true);
+         //   g=grapheGenerator.generationGraphe(100,4000,false);
+
+            //g.testerToutesLesColorations();
+
+            System.out.println("Veuillez choisir une méthode");
+            System.out.println("1 - Greedy");
+            System.out.println("2 - WelshPowell");
+            System.out.println("3 - DSatur");
+            System.out.println("Autre - Quitter");
+            choix = sc.nextInt();
+
+            g.coloration(choix,true);
             /*
             switch(choix) {
                 case 1:

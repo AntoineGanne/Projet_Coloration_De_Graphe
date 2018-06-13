@@ -128,6 +128,7 @@ public class Graphe {
                 if(!ColorationEstCorrecte()){
                     throw new Exception ("Coloration incorrecte!");
                 }
+                break;
             case 2:
                 nomMethode="WelshPowell";
                 start = System.nanoTime();
@@ -136,6 +137,7 @@ public class Graphe {
                 if(!ColorationEstCorrecte()){
                     throw new Exception ("Coloration incorrecte!");
                 }
+                break;
             case 3:
                 nomMethode="Dsatur";
                 start = System.nanoTime();
@@ -144,6 +146,7 @@ public class Graphe {
                 if(!ColorationEstCorrecte()){
                     throw new Exception ("Coloration incorrecte!");
                 }
+                break;
         }
 
 
