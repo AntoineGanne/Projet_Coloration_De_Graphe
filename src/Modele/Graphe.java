@@ -367,7 +367,7 @@ public class Graphe {
         for(Sommet s: sommets){
             compteur+=s.getNombreDeSuccesseurs();
         }
-        return compteur;
+        return compteur/2; //car les arcs sont comptés 2 fois
     }
     public void setEstOriente(boolean estOriente) {
         this.estOriente = estOriente;
