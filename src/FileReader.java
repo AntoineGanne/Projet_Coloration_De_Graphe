@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class FileReader {
 
-    static public Graphe lectureGrapheDepuisFichier(String nomFichier){
+    static public Graphe lectureGrapheDepuisFichier(String nomFichier) throws FileNotFoundException {
         Graphe grapheGenerated=new Graphe();
         int nbSommets=-1;
         int nbValSommet=-1;
@@ -77,7 +77,7 @@ public class FileReader {
                 fichierEnLecture=sc.hasNext();
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new FileNotFoundException("Ce fichier n'existe pas. Veuillez recommencer svp");
         } catch (IOException e) {
             e.printStackTrace();
         }
