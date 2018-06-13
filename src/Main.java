@@ -9,6 +9,7 @@ public class Main {
         int choix;
         double start, end;
         boolean lecture = true;
+        String dossierFichiers="fichiersSauvegarde/";//"fichiersTest/"
 
         while(lecture) {
             try {
@@ -19,9 +20,9 @@ public class Main {
                 String nomFichier = sc.next();
 
                 if (!nomFichier.contains(".txt"))
-                    g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier + ".txt");
+                    g = FileReader.lectureGrapheDepuisFichier( dossierFichiers+ nomFichier + ".txt");
                 else
-                    g = FileReader.lectureGrapheDepuisFichier("fichiersTest/" + nomFichier);
+                    g = FileReader.lectureGrapheDepuisFichier(dossierFichiers + nomFichier);
 
                 //   g=grapheGenerator.generationGraphe(100,4000,false);
 

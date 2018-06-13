@@ -1,7 +1,7 @@
 Nom: Sommets200_Aretes19900
 Oriente(non/oui): non
 NbSommets: 200
-NbArcs: 19900
+NbArcs: 39800
 --- Liste des sommets
 0 noeud0
 1 noeud1

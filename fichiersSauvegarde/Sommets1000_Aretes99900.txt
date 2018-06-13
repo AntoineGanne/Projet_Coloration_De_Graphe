@@ -1,7 +1,7 @@
 Nom: Sommets1000_Aretes99900
 Oriente(non/oui): non
 NbSommets: 1000
-NbArcs: 100000
+NbArcs: 200000
 --- Liste des sommets
 0 noeud0
 1 noeud1

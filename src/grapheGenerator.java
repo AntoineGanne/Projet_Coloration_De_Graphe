@@ -2,8 +2,8 @@ import Modele.Graphe;
 
 public class grapheGenerator {
     public static void main(String[] args){
-        int n=1000;
-        int m=399600;
+        int n=200;
+        int m=15920;
         Graphe g=generationGraphe(n,m,false);
         //Graphe g=generationGrapheComplet(n,false);
 
